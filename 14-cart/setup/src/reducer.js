@@ -50,9 +50,11 @@ const reducer = (state, action) => {
     total = parseFloat(total.toFixed(2))
     return { ...state, total, amount }
   }
+
   const loading = () => {
     return { ...state, loading: true }
   }
+
   const displayItems = () => {
     return { ...state, cart: action.payload, loading: false }
   }
