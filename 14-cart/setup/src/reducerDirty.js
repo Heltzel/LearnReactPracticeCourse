@@ -10,6 +10,30 @@ const reducer = (state, action) => {
     return { ...state, cart: newCart }
   }
 
+  // const increaseAmount = () => {
+  //   let tempCart = state.cart.map((cartItem) => {
+  //     if (cartItem.id === action.payload) {
+  //       return { ...cartItem, amount: cartItem.amount + 1 }
+  //     }
+  //     return cartItem
+  //   })
+  //   return { ...state, cart: tempCart }
+  // }
+
+  // const decreaseAmount = () => {
+  //   let tempCart = state.cart
+  //     .map((cartItem) => {
+  //       if (cartItem.id === action.payload) {
+  //         return { ...cartItem, amount: cartItem.amount - 1 }
+  //       }
+  //       return cartItem
+  //     })
+  //     .filter((cartItem) => {
+  //       return cartItem.amount !== 0
+  //     })
+  //   return { ...state, cart: tempCart }
+  // }
+
   const toggleAmount = () => {
     let tempCart = state.cart
       .map((cartItem) => {
@@ -62,6 +86,10 @@ const reducer = (state, action) => {
       return clearCart()
     case 'REMOVE_ITEM':
       return removeItem()
+    // case 'INCREASE_AMOUNT':
+    //   return increaseAmount()
+    // case 'DECREASE_AMOUNT':
+    //   return decreaseAmount()
     case 'TOGGLE_AMOUNT':
       return toggleAmount()
     case 'GET_TOTALS':
