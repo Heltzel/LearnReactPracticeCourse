@@ -9,44 +9,47 @@ const AppProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState('a')
   const [cocktails, setCocktails] = useState([])
 
-  const fetchDrinks = async (params) => {
-    setLoading(true)
-    try {
-      const response = await fetch(`${url}${searchTerm}`)
-      const data = await response.json()
-      const { drinks } = data
-      if (drinks) {
-        const newCocktails = drinks.map((drink) => {
-          const {
-            idDrink,
-            strDrink,
-            strDrinkThumb,
-            strAlcoholic,
-            strGlass,
-          } = drink
-          return {
-            id: idDrink,
-            name: strDrink,
-            image: strDrinkThumb,
-            info: strAlcoholic,
-            glass: strGlass,
-          }
-        })
-        setCocktails(newCocktails)
-      } else {
-        setCocktails([])
+  const fetchDrinks = useCallback(
+    async (params) => {
+      setLoading(true)
+      try {
+        const response = await fetch(`${url}${searchTerm}`)
+        const data = await response.json()
+        const { drinks } = data
+        if (drinks) {
+          const newCocktails = drinks.map((drink) => {
+            const {
+              idDrink,
+              strDrink,
+              strDrinkThumb,
+              strAlcoholic,
+              strGlass,
+            } = drink
+            return {
+              id: idDrink,
+              name: strDrink,
+              image: strDrinkThumb,
+              info: strAlcoholic,
+              glass: strGlass,
+            }
+          })
+          setCocktails(newCocktails)
+        } else {
+          setCocktails([])
+        }
+        setLoading(false)
+      } catch (error) {
+        console.log(error)
+        setLoading(false)
       }
-      setLoading(false)
-    } catch (error) {
-      console.log(error)
-      setLoading(false)
-    }
-  }
+    },
+    [searchTerm],
+  )
 
   useEffect(() => {
     fetchDrinks()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchTerm])
+  }, [searchTerm, fetchDrinks])
 
   return (
     <AppContext.Provider value={{ loading, cocktails, setSearchTerm }}>
